@@ -46,6 +46,4 @@ class Fischer(Classifier):
         return (self._t(np.array(x)) > self.tc) * 1 + 1
 
     def visualize(self):
-        #plt.scatter(self.data1.x, self.data1.y, label='Data set 1')
-        #plt.scatter(self.data2.x, self.data2.y, label='Data set 2')
         return plt.plot(self.means[:,0], self.means[:,1], 'r->')
