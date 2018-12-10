@@ -28,8 +28,8 @@ class SeparatedGenerator(DistributionGenerator):
         if n1 + n2 < n:
             n1 += 1
 
-        return np.concatenate((np.random.multivariate_normal([-6, 0], np.array([[1,0],[0,1.75]]), n1),
-                               np.random.multivariate_normal([6, 0], np.array([[1,0],[0,1.75]]), n2)))
+        return np.concatenate((np.random.multivariate_normal([-4.5, 0], np.array([[1,.35],[.35,1.75]]), n1),
+                               np.random.multivariate_normal([4.5, 0], np.array([[1,-.35],[-.35,1.75]]), n2)))
 
     def sample(self, n):
         return self._dist1(n), self._dist2(n)
@@ -45,6 +45,27 @@ class CircularGenerator(DistributionGenerator):
         ts = np.random.rand(n) * np.pi * 2
         rs = np.sqrt(np.abs(stats.norm.rvs(scale=9, size=n) + 25))
         return np.dstack((self._cartesian(rs, ts)))[0]
+
+    def sample(self, n):
+        return self._dist1(n), self._dist2(n)
+
+
+class GridGenerator(DistributionGenerator):
+    def _dist1(self, n):
+        n1 = n2 = n//2
+        if n1 + n2 < n:
+            n1 += 1
+
+        return np.concatenate((np.random.multivariate_normal([3, 3], np.array([[1,.35],[.35,1.75]]), n1),
+                               np.random.multivariate_normal([-3, -3], np.array([[1,-.35],[-.35,1.75]]), n2)))
+        
+    def _dist2(self, n):
+        n1 = n2 = n//2
+        if n1 + n2 < n:
+            n1 += 1
+
+        return np.concatenate((np.random.multivariate_normal([-3, 3], np.array([[1,.35],[.35,1.75]]), n1),
+                               np.random.multivariate_normal([3, -3], np.array([[1,-.35],[-.35,1.75]]), n2)))
 
     def sample(self, n):
         return self._dist1(n), self._dist2(n)
